@@ -1,0 +1,52 @@
+nvm use 18
+npx @react-native-community/cli@latest init Plantify
+
+cd Plantify
+
+npm start
+
+npm run 
+
+npx react-native run-android
+
+cd android && ./gradlew assembleRelease
+
+Project Name Change                 
+
+________________________________________________
+
+1.Clean Gradle (Android):-
+  cd android && ./gradlew clean && cd ..
+
+2.Reset Metro Bundler Cache:-
+  npx react-native start --reset-cache
+
+3.Clear Watchman Cache (if using Watchman):-
+  watchman watch-del-all
+
+4.Remove and Reinstall Node Modules:
+  rm -rf node_modules && npm install
+
+
+
+________________________________________________
+
+Steps to Build and Install the Release APK in Emulator  (React Native CLI )
+
+1.Generate the Release APK
+  cd android && ./gradlew assembleRelease
+
+check 
+  android/app/build/outputs/apk/release/app-release.apk
+
+2.Install the Release APK on the Emulator or Device
+  adb install -r android/app/build/outputs/apk/release/app-release.apk
+
+3.Run the Installed APK
+   adb shell am start -n com.plantify/.MainActivity
+
+4.(Optional) Uninstall the App
+  adb uninstall com.plantify
+
+5.Grant Execution Permission (if needed)
+  chmod +x ./gradlew
