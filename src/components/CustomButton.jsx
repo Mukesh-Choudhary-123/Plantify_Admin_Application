@@ -1,11 +1,12 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
-const CustomButton = ({ text = "Submit", onPress, backgroundColor = "#0D986A", textColor = "white" , style }) => {
+const CustomButton = ({ text = "Submit", onPress, backgroundColor = "#0D986A", textColor = "white" , style ,disable }) => {
   return (
     <TouchableOpacity 
       style={[styles.container, { backgroundColor } , style]} 
       onPress={onPress}
+      disabled={disable}
       
     >
       <Text style={[styles.text, { color:textColor } ]} >{text}</Text>

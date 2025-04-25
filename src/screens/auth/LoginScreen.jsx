@@ -7,6 +7,7 @@ import CustomButton from '../../components/CustomButton';
 import {useDispatch} from 'react-redux';
 import {useLoginMutation} from '../../api/auth';
 import { setCredentials } from '../../redux/slice/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
   // const navigation = useNavigation();
@@ -28,9 +29,10 @@ const LoginScreen = ({navigation}) => {
       // setEmail('');
       // setPassword('');
       // setErrorMsg('');
-      dispatch(setCredentials({user: userData.user, token: userData.token}));
-
-      // navigation.reset({index: 0, routes: [{name: 'tabs'}]});
+     
+      await AsyncStorage.setItem("userToken", userData.token);
+      await AsyncStorage.setItem("user", JSON.stringify(userData.admin));
+      dispatch(setCredentials({admin: userData.admin, token: userData.token}));
     } catch (err) {
       
       console.error('Login error:', err);
@@ -46,7 +48,7 @@ const LoginScreen = ({navigation}) => {
       />
       <Text
         style={{fontSize: 30, fontWeight: 700, color: 'grey', marginTop: 10}}>
-        Login
+        Admin Login
       </Text>
       <CustomInput
         value={email}
@@ -61,9 +63,10 @@ const LoginScreen = ({navigation}) => {
         placeholder="Enter Password"
       />
       <CustomButton
-        text="login"
+        text={!isLoading? "login" :"loging..."}
         style={{marginTop: 25}}
         onPress={handleSubmit}
+        disable={isLoading? true : false}
       />
       {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
     </View>
